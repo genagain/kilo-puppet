@@ -359,5 +359,9 @@ class quickstack::params (
 
   #moc allowed users
   $moc_users,
+
+  # ELK stack
+  $elasticsearch_host
+  $kibana_host
 ) {
 }
