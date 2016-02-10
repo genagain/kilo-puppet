@@ -809,7 +809,11 @@ class quickstack::controller_common (
   }
 
   class { '::logstash':
-    logstash_host => $elasticsearch_host
+    version               => 2.2.0-1_centos,
+    package_url           => 'https://download.elastic.co/logstash/logstash/packages/centos/logstash-2.2.0-1.noarch.rpm'
+    logstash_host         => $elasticsearch_host
+    ## To do add logstash-input-beats-plugin
+    ## Add logstash config that uses the elasticsearch_host
   }
 
   class { '::kibana':
