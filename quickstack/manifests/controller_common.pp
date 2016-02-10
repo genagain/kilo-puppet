@@ -167,6 +167,8 @@ class quickstack::controller_common (
   $source                        = $quickstack::params::source,
   $controller_private            = $quickstack::params::controller_private,
   $ntp_public_servers            = $quickstack::params::ntp_public_servers,
+  $elasticsearch_host            = $quickstack::params::elasticsearch_host
+  $kibana_host                   = $quickstack::params::kibana_host
 ) inherits quickstack::params {
 
   if str2bool_i("$use_ssl_endpoints") {
@@ -802,4 +804,15 @@ class quickstack::controller_common (
   # Create semodule for keystone-all access to fernet keys
   class {'moc_openstack::keystone_all_semodule':}
 
+  class { '::elasticsearch':
+    elasticsearch_host => $elasticsearch_host
+  }
+
+  class { '::logstash':
+    logstash_host => $elasticsearch_host
+  }
+
+  class { '::kibana':
+    kibana_host => $kibana_host
+  }
 }

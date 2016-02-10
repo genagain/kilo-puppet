@@ -92,6 +92,8 @@ class quickstack::compute_common (
   $source                       = $quickstack::params::source,
   $controller_private           = $quickstack::params::controller_private,
   $ntp_local_servers            = $quickstack::params::ntp_local_servers,
+  $elasticsearch_host           = $quickstack::params::elasticsearch_host
+  $kibana_host                  = $quickstack::params::kibana_host
 ) inherits quickstack::params {
 
   if str2bool_i("$use_ssl") {
@@ -386,6 +388,18 @@ class quickstack::compute_common (
        "puppet:///modules/sensu/plugins/nova-server-state-metrics.py",
        "puppet:///modules/sensu/plugins/cpu-pcnt-usage-metrics.rb"
     ]
+  }
+
+  class { '::elasticsearch':
+    elasticsearch_host    => $elasticsearch_host
+  }
+
+  class { '::logstash':
+    logstash_host         => $elasticsearch_host
+  }
+
+  class { '::kibana'
+    kibana_host           => $kibana_host
   }
 
   class {'quickstack::ntp':
