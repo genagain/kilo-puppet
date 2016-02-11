@@ -152,8 +152,6 @@ class quickstack::controller_common (
   $use_ssl_endpoints             = $quickstack::params::use_ssl_endpoints,
   $neutron_admin_password        = $quickstack::params::neutron_user_password,
   $root_ca_cert                  = $quickstack::params::root_ca_cert,
-  $horizon_key                   = $quickstack::params::horizon_key,
-  $horizon_cert                  = $quickstack::params::horizon_cert,
   $nova_key                      = $quickstack::params::nova_key,
   $nova_cert                     = $quickstack::params::nova_cert,
   $keystone_key                  = $quickstack::params::keystone_key,
@@ -167,7 +165,7 @@ class quickstack::controller_common (
   $source                        = $quickstack::params::source,
   $controller_private            = $quickstack::params::controller_private,
   $ntp_public_servers            = $quickstack::params::ntp_public_servers,
-  $elasticsearch_host            = $quickstack::params::elasticsearch_host
+  $elasticsearch_host            = $quickstack::params::elasticsearch_host,
   $kibana_host                   = $quickstack::params::kibana_host
 ) inherits quickstack::params {
 
@@ -805,13 +803,13 @@ class quickstack::controller_common (
   class {'moc_openstack::keystone_all_semodule':}
 
   class { '::elasticsearch':
-    version => '2.2.0'
-    host => $elasticsearch_host
+    version => '2.2.0',
+    host => $elasticsearch_host,
     package_url          => 'https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-2.2.0.rpm'
   }
 
   class { '::logstash':
-    version               => 2.2.0-1_centos,
+    version               => '2.2.0-1_centos',
     package_url           => 'https://download.elastic.co/logstash/logstash/packages/centos/logstash-2.2.0-1.noarch.rpm'
     ## Maybe add a logstash host?
     ## To do add logstash-input-beats-plugin
@@ -819,16 +817,16 @@ class quickstack::controller_common (
   }
 
   class { '::kibana':
-    version               => '4.4.0'
-    base_url              => 'https://download.elastic.co/kibana/kibana/kibana-4.4.0-linux-x64.tar.gz'
-    kibana_host           => $kibana_host
+    version               => '4.4.0',
+    base_url              => 'https://download.elastic.co/kibana/kibana/kibana-4.4.0-linux-x64.tar.gz',
+    kibana_host           => $kibana_host,
     es_url                => $elasticsearch_host
   }
 
   class { '::filebeat':
     outputs => {
       'logstash'          => {
-        'host' => [ $elasticsearch_host:5044 ],
+        'host' => [ "#{$elasticsearch_host}:5044" ],
         'loadbalance'     => true
       }
     }

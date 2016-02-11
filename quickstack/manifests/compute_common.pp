@@ -83,7 +83,6 @@ class quickstack::compute_common (
   $nova_uuid                    = $quickstack::params::nova_uuid,
   $rbd_key                      = $quickstack::params::rbd_key,
   $ceph_iface                   = $quickstack::params::ceph_iface,
-  $ceph_iface                   = $quickstack::params::ceph_iface,
   $ceph_vlan                    = $quickstack::params::ceph_vlan,
   $sensu_rabbitmq_host          = $quickstack::params::sensu_rabbitmq_host,
   $sensu_rabbitmq_user          = $quickstack::params::sensu_rabbitmq_user,
@@ -92,7 +91,7 @@ class quickstack::compute_common (
   $source                       = $quickstack::params::source,
   $controller_private           = $quickstack::params::controller_private,
   $ntp_local_servers            = $quickstack::params::ntp_local_servers,
-  $elasticsearch_host           = $quickstack::params::elasticsearch_host
+  $elasticsearch_host           = $quickstack::params::elasticsearch_host,
   $kibana_host                  = $quickstack::params::kibana_host
 ) inherits quickstack::params {
 
@@ -393,7 +392,6 @@ class quickstack::compute_common (
   class {'quickstack::ntp':
     servers => $ntp_local_servers,
   }
-
   class { '::elasticsearch':
     version => '2.2.0'
     host => $elasticsearch_host
