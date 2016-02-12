@@ -393,30 +393,31 @@ class quickstack::compute_common (
     servers => $ntp_local_servers,
   }
   class { '::elasticsearch':
-    version => '2.2.0'
-    host => $elasticsearch_host
+    ensure               => 'present',
+    java_install         => true,
+    version              => '2.2.0',
+    host => $elasticsearch_host,
     package_url          => 'https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-2.2.0.rpm'
+    ## TODO: Change from actual urls to rpms
   }
 
   class { '::logstash':
-    version               => 2.2.0-1_centos,
+    version               => '2.2.0-1_centos',
     package_url           => 'https://download.elastic.co/logstash/logstash/packages/centos/logstash-2.2.0-1.noarch.rpm'
-    ## Maybe add a logstash host?
     ## To do add logstash-input-beats-plugin
-    ## Add logstash config that uses the elasticsearch_host
   }
 
   class { '::kibana':
-    version               => '4.4.0'
-    base_url              => 'https://download.elastic.co/kibana/kibana/kibana-4.4.0-linux-x64.tar.gz'
-    kibana_host           => $kibana_host
+    version               => '4.4.0',
+    base_url              => 'https://download.elastic.co/kibana/kibana/kibana-4.4.0-linux-x64.tar.gz',
+    kibana_host           => $kibana_host,
     es_url                => $elasticsearch_host
   }
 
   class { '::filebeat':
     outputs => {
       'logstash'          => {
-        'host' => [ $elasticsearch_host:5044 ],
+        'host' => [ "#{$elasticsearch_host}:5044" ],
         'loadbalance'     => true
       }
     }
