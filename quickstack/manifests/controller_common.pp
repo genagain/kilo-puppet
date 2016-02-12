@@ -807,7 +807,7 @@ class quickstack::controller_common (
     java_install         => true,
     version              => '2.2.0',
     host => $elasticsearch_host,
-    package_url          => 'puppet:///modules/elasticsearch/elasticsearch-2.1.1.rpm'
+    package_url          => 'puppet:///modules/elasticsearch/elasticsearch-2.2.0.rpm'
   }
 
   class { '::logstash':
