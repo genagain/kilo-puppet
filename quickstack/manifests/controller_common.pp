@@ -803,17 +803,17 @@ class quickstack::controller_common (
   class {'moc_openstack::keystone_all_semodule':}
 
   class { '::elasticsearch':
-    version => '2.2.0',
+    ensure               => 'present',
+    java_install         => true,
+    version              => '2.2.0',
     host => $elasticsearch_host,
-    package_url          => 'https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-2.2.0.rpm'
+    package_url          => 'puppet:///modules/elasticsearch/elasticsearch-2.1.1.rpm'
   }
 
   class { '::logstash':
     version               => '2.2.0-1_centos',
-    package_url           => 'https://download.elastic.co/logstash/logstash/packages/centos/logstash-2.2.0-1.noarch.rpm'
-    ## Maybe add a logstash host?
+    package_url           => 'puppet:///modules/logstash/logstash-2.2.0-1.noarch.rpm'
     ## To do add logstash-input-beats-plugin
-    ## Add logstash config that uses the elasticsearch_host
   }
 
   class { '::kibana':
