@@ -3,9 +3,9 @@ require 'sensu-plugin/metric/cli'
 require 'socket'
 
 #
-# CPU Graphite
+# Instructions Retired
 #
-class CpuGraphite < Sensu::Plugin::Metric::CLI::Graphite
+class InstructionsRetired < Sensu::Plugin::Metric::CLI::Graphite
 
   def run
     begin
