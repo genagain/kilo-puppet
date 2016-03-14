@@ -13,6 +13,7 @@
 #
 # DEPENDENCIES:
 #   gem: sensu-plugin
+#   gem: socket
 #
 # USAGE:
 #
