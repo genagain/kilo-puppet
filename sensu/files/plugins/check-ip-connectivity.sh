@@ -10,7 +10,7 @@ STATE_DEPENDENT=4
 
 #target=
 
-count=$(ping -c 1 10.13.37.83 | grep icmp* | wc -l)
+count=$(ping -c 1 10.13.37.141 | grep icmp* | wc -l)
 
 if [ $count -eq 0 ]
 then
