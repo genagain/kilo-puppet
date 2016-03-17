@@ -150,7 +150,7 @@ class quickstack::controller_common (
   $sensu_rabbitmq_host           = $quickstack::params::sensu_rabbitmq_host,
   $sensu_rabbitmq_user           = $quickstack::params::sensu_rabbitmq_user,
   $sensu_rabbitmq_password       = $quickstack::params::sensu_rabbitmq_password,
-  $sensu_client_subscriptions_controller   = ['moc-sensu','openstack-api','openstack-metrics'],
+  $sensu_client_subscriptions_controller   = ['moc-sensu', 'instructions-retired'],
   $ceph_key                      = $quickstack::params::ceph_key,
   $use_ssl_endpoints             = $quickstack::params::use_ssl_endpoints,
   $neutron_admin_password        = $quickstack::params::neutron_user_password,
