@@ -88,8 +88,9 @@ class quickstack::compute_common (
   $sensu_rabbitmq_host          = $quickstack::params::sensu_rabbitmq_host,
   $sensu_rabbitmq_user          = $quickstack::params::sensu_rabbitmq_user,
   $sensu_rabbitmq_password      = $quickstack::params::sensu_rabbitmq_password,
-  $sensu_client_subscriptions_compute = ['moc-sensu', 'instructions-retired'],
+  $sensu_client_subscriptions_compute = ['moc-sensu'],
   $sensu_client_keepalive       = { "thresholds" => { "warning" => 60, "critical" => 300 }, "handlers" => ["node-email"], "refresh" => 3600 },
+  $sensu_client_subscriptions_compute = ['moc-sensu', 'instructions-retired']
   $public_net                   = $quickstack::params::public_net,
   $private_net                  = $quickstack::params::private_net,
   $ntp_local_servers            = $quickstack::params::ntp_local_servers,
