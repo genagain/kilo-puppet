@@ -89,6 +89,7 @@ class quickstack::compute_common (
   $sensu_rabbitmq_user          = $quickstack::params::sensu_rabbitmq_user,
   $sensu_rabbitmq_password      = $quickstack::params::sensu_rabbitmq_password,
   $sensu_client_subscriptions_compute = ['moc-sensu', 'instructions-retired'],
+  $sensu_client_keepalive       = { "thresholds" => { "warning" => 60, "critical" => 300 }, "handlers" => ["node-email"], "refresh" => 3600 },
   $public_net                   = $quickstack::params::public_net,
   $private_net                  = $quickstack::params::private_net,
   $ntp_local_servers            = $quickstack::params::ntp_local_servers,
@@ -374,6 +375,7 @@ class quickstack::compute_common (
     rabbitmq_password     => $sensu_rabbitmq_password,
     rabbitmq_vhost        => '/sensu',
     subscriptions         => $sensu_client_subscriptions_compute,
+    client_keepalive      => $sensu_client_keepalive,
     plugins               => [
        "puppet:///modules/sensu/plugins/check-ip-connectivity.sh",
        "puppet:///modules/sensu/plugins/check-mem.sh",
