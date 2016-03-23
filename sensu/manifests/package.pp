@@ -36,9 +36,6 @@ class sensu::package {
     ensure  => $sensu::version,
   }
 
-  package { 'perf':
-    ensure  => 'installed',
-  }
   if $::sensu::sensu_plugin_provider {
     $plugin_provider = $::sensu::sensu_plugin_provider
   } else {
