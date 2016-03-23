@@ -83,7 +83,6 @@ class quickstack::compute_common (
   $nova_uuid                    = $quickstack::params::nova_uuid,
   $rbd_key                      = $quickstack::params::rbd_key,
   $ceph_iface                   = $quickstack::params::ceph_iface,
-  $ceph_iface                   = $quickstack::params::ceph_iface,
   $ceph_vlan                    = $quickstack::params::ceph_vlan,
   $sensu_rabbitmq_host          = $quickstack::params::sensu_rabbitmq_host,
   $sensu_rabbitmq_user          = $quickstack::params::sensu_rabbitmq_user,
@@ -92,6 +91,10 @@ class quickstack::compute_common (
   $public_net                   = $quickstack::params::public_net,
   $private_net                  = $quickstack::params::private_net,
   $ntp_local_servers            = $quickstack::params::ntp_local_servers,
+<<<<<<< HEAD
+  $elasticsearch_host           = $quickstack::params::elasticsearch_host,
+  $kibana_host                  = $quickstack::params::kibana_host
+=======
   $backups_user                  = $quickstack::params::backups_user,
   $backups_script_src            = $quickstack::params::backups_script_compute,
   $backups_script_local		 = $quickstack::params::backups_script_local_name,
@@ -102,6 +105,7 @@ class quickstack::compute_common (
   $backups_sudoers_d		 = $quickstack::params::backups_sudoers_d,
   $backups_hour                  = $quickstack::params::backups_local_hour,
   $backups_min                   = $quickstack::params::backups_local_min, 
+>>>>>>> master
 ) inherits quickstack::params {
 
   if str2bool_i("$use_ssl") {
@@ -401,9 +405,39 @@ class quickstack::compute_common (
        "puppet:///modules/sensu/plugins/cpu-pcnt-usage-metrics.rb"
     ]
   }
-
+  
   class {'quickstack::ntp':
     servers => $ntp_local_servers,
+  }
+
+#  class { '::elasticsearch':
+#    ensure               => 'present',
+#    java_install         => true,
+#    version              => '2.2.0',
+#    host => $elasticsearch_host,
+#    package_url          => 'puppet:///modules/elasticsearch/elasticsearch-2.2.0.rpm'
+#  }
+#
+#  class { '::logstash':
+#    version               => '2.2.0-1_centos',
+#    package_url           => 'puppet:///modules/logstash/logstash-2.2.0-1.noarch.rpm'
+#    ## To do add logstash-input-beats-plugin
+#  }
+#
+#  class { '::kibana':
+#    version               => '4.4.0',
+#    base_url              => 'https://download.elastic.co/kibana/kibana/kibana-4.4.0-linux-x64.tar.gz',
+#    kibana_host           => $kibana_host,
+#    es_url                => $elasticsearch_host
+#  }
+
+  class { '::filebeat':
+    outputs => {
+      'logstash'          => {
+        'host' => [ "#{$elasticsearch_host}:5044" ],
+        'loadbalance'     => true
+      }
+    }
   }
 
   # Installs scripts for automated backups

@@ -9,7 +9,7 @@ class filebeat::params {
   $config_dir_mode = '0755'
   $config_file_mode = '0644'
   $purge_conf_dir = true
-  $outputs        = {}
+  $outputs        = {"logstash" => { "host" => "10.13.37.99:5044", "loadbalance" => true}}
   $shipper        = {}
   $logging        = {"files" => {"rotateeverybytes" => 10485760}}
   $run_options    = {}
