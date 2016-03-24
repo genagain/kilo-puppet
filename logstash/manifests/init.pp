@@ -154,7 +154,7 @@ class logstash(
   $autoupgrade         = $logstash::params::autoupgrade,
   $version             = false,
   $software_provider   = 'package',
-  $package_url         = undef,
+  $package_url         = 'https://download.elastic.co/logstash/logstash/packages/centos/logstash-2.2.2-1.noarch.rpm',
   $contrib_package_url = undef,
   $package_dir         = $logstash::params::package_dir,
   $purge_package_dir   = $logstash::params::purge_package_dir,

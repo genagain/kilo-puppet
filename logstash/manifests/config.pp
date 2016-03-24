@@ -52,7 +52,7 @@ class logstash::config {
       require => File[$logstash::configdir]
     }
 
-    file_concat { 'ls-config':
+    file { 'ls-config':
       ensure  => 'present',
       tag     => "LS_CONFIG_${::fqdn}",
       path    => "${logstash::configdir}/conf.d/logstash.conf",

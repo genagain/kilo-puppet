@@ -846,11 +846,22 @@ class quickstack::controller_common (
 #    package_url          => 'puppet:///modules/elasticsearch/elasticsearch-2.2.0.rpm'
 #  }
 #
-#  class { '::logstash':
-#    version               => '2.2.0-1_centos',
-#    package_url           => 'puppet:///modules/logstash/logstash-2.2.0-1.noarch.rpm'
-#    ## To do add logstash-input-beats-plugin
+  class { '::logstash': 
+  ## To do add logstash-input-beats-plugin
+  }
+  
+  file {
+    logstash::configfile { 'logstash':
+      content => template('logstash/logstash.conf.erb')
+    }
+  }
+
+ 
+#  logstash::configfile { 'logstash':
+#    content => template("logstash/logstash.conf.erb"),
+#    order   => 10
 #  }
+  
 #
 #  class { '::kibana':
 #    version               => '4.4.0',
