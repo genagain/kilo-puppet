@@ -59,6 +59,8 @@ class elasticsearch::params {
     'index.search.slowlog'   => 'TRACE, index_search_slow_log_file',
     'index.indexing.slowlog' => 'TRACE, index_indexing_slow_log_file',
   }
+  
+  $elasticsearch_host = $quickstack::params::elasticsearch_host
 
   #### Internal module values
 

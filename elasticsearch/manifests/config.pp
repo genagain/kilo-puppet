@@ -118,7 +118,8 @@ class elasticsearch::config {
     }
 
     file { '/etc/elasticsearch/elasticsearch.yml':
-      ensure => 'absent',
+      ensure => 'present',
+      content => template('elasticsearch/default.yml.erb'),
     }
     file { '/etc/elasticsearch/logging.yml':
       ensure => 'absent',
