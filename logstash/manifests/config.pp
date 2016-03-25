@@ -23,6 +23,8 @@
 # * Richard Pijnenburg <mailto:richard.pijnenburg@elasticsearch.com>
 #
 class logstash::config {
+  include logstash::params
+  $elasticsearch_host = $quickstack::params::elasticsearch_host
 
   #### Configuration
 
@@ -59,6 +61,7 @@ class logstash::config {
       owner   => $logstash::logstash_user,
       group   => $logstash::logstash_group,
       mode    => '0644',
+      content => template("logstash/default.conf.erb"),
       notify  => $notify_service,
       require => File[ "${logstash::configdir}/conf.d" ]
     }

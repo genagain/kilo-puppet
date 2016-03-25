@@ -50,6 +50,9 @@ class logstash::params {
 
   # package download timeout
   $package_dl_timeout = 600 # 300 seconds is default of puppet
+  
+  # elasticsearch host
+  $elasticsearch_host = $quickstack::params::elasticsearch_host
 
   #### Internal module values
 

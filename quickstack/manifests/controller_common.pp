@@ -852,16 +852,6 @@ class quickstack::controller_common (
   class { '::logstash': 
   ## To do add logstash-input-beats-plugin
   }
-  
-  $logstash_configs = hiera('logstash_configs', {})
-  create_resources('logstash::configfile', $logstash_configs)
-  
-#  file {
-#    logstash::configfile { 'logstash':
-#      content => template('logstash/logstash.conf.erb')
-#    }
-#  }
-
  
 #  logstash::configfile { 'logstash':
 #    content => template("logstash/logstash.conf.erb"),
@@ -878,9 +868,9 @@ class quickstack::controller_common (
 
   class { '::filebeat':
     outputs => {
-      'logstash'          => {
-        'host' => [ "#{$elasticsearch_host}:5044" ],
-        'loadbalance'     => true
+      'logstash'  => {
+        'host'        => [ "#{$elasticsearch_host}:5044" ],
+        'loadbalance' => true
       }
     }
   }
