@@ -850,11 +850,14 @@ class quickstack::controller_common (
   ## To do add logstash-input-beats-plugin
   }
   
-  file {
-    logstash::configfile { 'logstash':
-      content => template('logstash/logstash.conf.erb')
-    }
-  }
+  $logstash_configs = hiera('logstash_configs', {})
+  create_resources('logstash::configfile', $logstash_configs)
+  
+#  file {
+#    logstash::configfile { 'logstash':
+#      content => template('logstash/logstash.conf.erb')
+#    }
+#  }
 
  
 #  logstash::configfile { 'logstash':
