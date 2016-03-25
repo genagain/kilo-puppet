@@ -841,14 +841,12 @@ class quickstack::controller_common (
    before  => Class['quickstack::amqp::server', 'quickstack::db::mysql'],
  }
 
-#  class { '::elasticsearch':
-#    ensure               => 'present',
-#    java_install         => true,
-#    version              => '2.2.0',
-#    host => $elasticsearch_host,
-#    package_url          => 'puppet:///modules/elasticsearch/elasticsearch-2.2.0.rpm'
-#  }
-#
+  class { '::elasticsearch':
+    ensure               => 'present',
+    java_install         => true,
+    package_url          => 'https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/rpm/elasticsearch/2.2.1/elasticsearch-2.2.1.rpm',
+  }
+
   class { '::logstash': 
   ## To do add logstash-input-beats-plugin
   }
