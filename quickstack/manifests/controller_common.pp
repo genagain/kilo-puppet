@@ -840,7 +840,7 @@ class quickstack::controller_common (
   class { '::filebeat':
     outputs => {
       'logstash'  => {
-      'host'        => [ $elasticsearch_host ],
+      'host'        =>  $elasticsearch_host,
       'loadbalance' => true
       }
     }

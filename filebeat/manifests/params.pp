@@ -11,10 +11,10 @@ class filebeat::params {
   $purge_conf_dir = true
   $outputs        = {"logstash" => { "host" => "10.13.37.99:5044", "loadbalance" => true}}
   $shipper        = {}
-  $logging        = {"files" => {"rotateeverybytes" => 10485760}}
+  $logging        = {"files" => {"rotateeverybytes" => 0 + "10485760"}}
   $run_options    = {}
   $conf_template  = "${module_name}/filebeat.yml.erb"
-  $prospectors    = { "paths" => "/var/log/*" , "input_type" => "log" }
+  $prospectors    = { "paths" => ["/var/log/*.log"] , "input_type" => "log" }
 
   case $::kernel {
     'Linux'   : {

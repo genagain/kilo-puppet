@@ -1,16 +1,11 @@
 class filebeat::config {
   $filebeat_config = {
     'filebeat'   => {
-      'spool_size'    => $filebeat::spool_size,
-      'idle_timeout'  => $filebeat::idle_timeout,
       'registry_file' => $filebeat::registry_file,
-      'config_dir'    => $filebeat::config_dir,
     },
     'prospectors'=> $filebeat::prospectors,
     'output'     => $filebeat::outputs,
-    'shipper'    => $filebeat::shipper,
     'logging'    => $filebeat::logging,
-    'runoptions' => $filebeat::run_options,
   }
 
   case $::kernel {
