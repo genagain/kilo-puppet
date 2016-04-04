@@ -837,17 +837,17 @@ class quickstack::controller_common (
     cron_min       => $backups_min,
   }
   
-  class { '::filebeat':
-    outputs => {
-      'logstash'  => {
-      'host'        =>  $elasticsearch_host,
-      'loadbalance' => true
-      }
-    },
-    prospectors => {
-      "paths" => ["/var/log/*.log", "/var/log/keystone/*", "/var/log/glance/*","/var/log/ceph/*", "/var/log/ceilometer/*", "/var/log/cinder/*", "/var/log/horizon/*", "/var/log/neutron/*", "/var/log/nova/*", "/var/log/sensu/*", "/var/log/puppet/*", "/var/log/rabbitmq/*"],
-      "input_type" => "log"
-    }
-  }
+#  class { '::filebeat':
+#    outputs => {
+#      'logstash'  => {
+#      'host'        =>  $elasticsearch_host,
+#      'loadbalance' => true
+#      }
+#    },
+#    prospectors => {
+#      "paths" => ["/var/log/*.log", "/var/log/keystone/*", "/var/log/glance/*","/var/log/ceph/*", "/var/log/ceilometer/*", "/var/log/cinder/*", "/var/log/horizon/*", "/var/log/neutron/*", "/var/log/nova/*", "/var/log/sensu/*", "/var/log/puppet/*", "/var/log/rabbitmq/*"],
+#      "input_type" => "log"
+#    }
+#  }
 
 }
