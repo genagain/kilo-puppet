@@ -5,16 +5,15 @@ class filebeat::params {
   $service_enable = true
   $spool_size     = 1024
   $idle_timeout   = '5s'
-  $registry_file  = '/var/lib/filebeat/registry'
+  $registry_file  = '.filebeat'
   $config_dir_mode = '0755'
   $config_file_mode = '0644'
   $purge_conf_dir = true
-  $outputs        = {"logstash" => { "host" => "10.13.37.99:5044", "loadbalance" => true}}
+  $outputs        = {}
   $shipper        = {}
-  $logging        = {"files" => {"rotateeverybytes" => 0 + "10485760"}}
+  $logging        = {}
   $run_options    = {}
   $conf_template  = "${module_name}/filebeat.yml.erb"
-  $prospectors    = { "paths" => ["/var/log/*.log"] , "input_type" => "log" }
 
   case $::kernel {
     'Linux'   : {
@@ -24,13 +23,22 @@ class filebeat::params {
       $tmp_dir         = '/tmp'
       $install_dir     = undef
       $download_url    = undef
+      case $::osfamily {
+        'RedHat': {
+          $service_provider = 'redhat'
+        }
+        default: {
+          $service_provider = undef
+        }
+      }
     }
 
     'Windows' : {
-      $config_dir      = 'C:/Program Files/Filebeat/conf.d'
-      $download_url    = 'https://download.elastic.co/beats/filebeat/filebeat-1.0.1-windows.zip'
-      $install_dir     = 'C:/Program Files'
-      $tmp_dir         = 'C:/Temp'
+      $config_dir       = 'C:/Program Files/Filebeat/conf.d'
+      $download_url     = 'https://download.elastic.co/beats/filebeat/filebeat-1.0.1-windows.zip'
+      $install_dir      = 'C:/Program Files'
+      $tmp_dir          = 'C:/Temp'
+      $service_provider = undef
     }
 
     default : {

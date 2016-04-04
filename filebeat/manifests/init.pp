@@ -36,6 +36,7 @@ class filebeat (
   $manage_repo      = $filebeat::params::manage_repo,
   $service_ensure   = $filebeat::params::service_ensure,
   $service_enable   = $filebeat::params::service_enable,
+  $service_provider = $filebeat::params::service_provider,
   $spool_size       = $filebeat::params::spool_size,
   $idle_timeout     = $filebeat::params::idle_timeout,
   $registry_file    = $filebeat::params::registry_file,
@@ -51,7 +52,7 @@ class filebeat (
   $download_url     = $filebeat::params::download_url,
   $install_dir      = $filebeat::params::install_dir,
   $tmp_dir          = $filebeat::params::tmp_dir,
-  $prospectors      = $filebeat::params::prospectors,
+  $prospectors      = {},
 ) inherits filebeat::params {
 
   $kernel_fail_message = "${::kernel} is not supported by filebeat."
@@ -69,4 +70,8 @@ class filebeat (
   class { 'filebeat::config': } ->
   class { 'filebeat::service': } ->
   anchor { 'filebeat::end': }
+
+  if !empty($prospectors) {
+    create_resources('filebeat::prospector', $prospectors)
+  }
 }

@@ -843,11 +843,11 @@ class quickstack::controller_common (
       'hosts'        =>  [$elasticsearch_host],
       'loadbalance' => true
       }
-    },
-    prospectors => {
-      "paths" => ["/var/log/*.log"],
-      "input_type" => "log"
     }
   }
 
+   filebeat::prospector { 'logs':
+      paths => ["/var/log/*.log"],
+      input_type => "log",
+    }
 }
