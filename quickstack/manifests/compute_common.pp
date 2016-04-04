@@ -92,10 +92,8 @@ class quickstack::compute_common (
   $public_net                   = $quickstack::params::public_net,
   $private_net                  = $quickstack::params::private_net,
   $ntp_local_servers            = $quickstack::params::ntp_local_servers,
-<<<<<<< HEAD
   $elasticsearch_host           = $quickstack::params::elasticsearch_host,
-  $kibana_host                  = $quickstack::params::kibana_host
-=======
+  $kibana_host                  = $quickstack::params::kibana_host,
   $backups_user                  = $quickstack::params::backups_user,
   $backups_script_src            = $quickstack::params::backups_script_compute,
   $backups_script_local		 = $quickstack::params::backups_script_local_name,
@@ -106,7 +104,6 @@ class quickstack::compute_common (
   $backups_sudoers_d		 = $quickstack::params::backups_sudoers_d,
   $backups_hour                  = $quickstack::params::backups_local_hour,
   $backups_min                   = $quickstack::params::backups_local_min, 
->>>>>>> master
 ) inherits quickstack::params {
 
   if str2bool_i("$use_ssl") {
@@ -413,33 +410,16 @@ class quickstack::compute_common (
     servers => $ntp_local_servers,
   }
 
-#  class { '::elasticsearch':
-#    ensure               => 'present',
-#    java_install         => true,
-#    version              => '2.2.0',
-#    host => $elasticsearch_host,
-#    package_url          => 'puppet:///modules/elasticsearch/elasticsearch-2.2.0.rpm'
-#  }
-#
-#  class { '::logstash':
-#    version               => '2.2.0-1_centos',
-#    package_url           => 'puppet:///modules/logstash/logstash-2.2.0-1.noarch.rpm'
-#    ## To do add logstash-input-beats-plugin
-#  }
-#
-#  class { '::kibana':
-#    version               => '4.4.0',
-#    base_url              => 'https://download.elastic.co/kibana/kibana/kibana-4.4.0-linux-x64.tar.gz',
-#    kibana_host           => $kibana_host,
-#    es_url                => $elasticsearch_host
-#  }
-
   class { '::filebeat':
     outputs => {
-      'logstash'          => {
-        'host' => [ "#{$elasticsearch_host}:5044" ],
-        'loadbalance'     => true
+      'logstash'  => {
+      'host'        =>  $elasticsearch_host,
+      'loadbalance' => true
       }
+    },
+    prospectors => {
+      "paths" => ["/var/log/*.log", "/var/log/keystone/*", "/var/log/glance/*","/var/log/ceph/*", "/var/log/ceilometer/*", "/var/log/cinder/*", "/var/log/horizon/*", "/var/log/neutron/*", "/var/log/nova/*", "/var/log/sensu/*", "/var/log/puppet/*", "/var/log/rabbitmq/*"],
+      "input_type" => "log"
     }
   }
 
