@@ -410,17 +410,17 @@ class quickstack::compute_common (
     servers => $ntp_local_servers,
   }
 
-  class { '::filebeat':
+  class { 'filebeat':
     outputs => {
       'logstash'  => {
-      'host'        =>  $elasticsearch_host,
+      'hosts'        =>  [$elasticsearch_host],
       'loadbalance' => true
       }
-    },
-    prospectors => {
-      "paths" => ["/var/log/*.log", "/var/log/keystone/*", "/var/log/glance/*","/var/log/ceph/*", "/var/log/ceilometer/*", "/var/log/cinder/*", "/var/log/horizon/*", "/var/log/neutron/*", "/var/log/nova/*", "/var/log/sensu/*", "/var/log/puppet/*", "/var/log/rabbitmq/*"],
-      "input_type" => "log"
     }
+  }
+
+  filebeat::prospector { 'generic':
+      paths => ["/var/log/*.log"]
   }
 
   # Installs scripts for automated backups
