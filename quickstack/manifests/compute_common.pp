@@ -416,6 +416,9 @@ class quickstack::compute_common (
       'hosts'        =>  [$elasticsearch_host],
       'loadbalance' => true
       }
+    },
+    logging => {
+      'level' => "info"
     }
   }
 
