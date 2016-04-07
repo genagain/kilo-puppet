@@ -420,7 +420,7 @@ class quickstack::compute_common (
   }
 
   filebeat::prospector { 'generic':
-      paths => ["/var/log/*.log", "/var/log/nova/*", "/var/log/neutron/*", "/var/log/openvswitch/*"]
+      paths => ["/var/log/*.log", "/var/log/secure", "/var/log/messages", "/var/log/ceph/*", "/var/log/nova/*", "/var/log/neutron/*", "/var/log/openvswitch/*"]
   }
 
   # Installs scripts for automated backups
