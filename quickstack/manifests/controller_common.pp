@@ -836,5 +836,20 @@ class quickstack::controller_common (
     cron_hour      => $backups_hour,
     cron_min       => $backups_min,
   }
+  
+  class { 'filebeat':
+    outputs => {
+      'logstash'  => {
+      'hosts'        =>  [$elasticsearch_host],
+      'loadbalance' => true
+      }
+    },
+    logging => {
+      'level' => "info"
+    }
+  }
 
+   filebeat::prospector { 'generic':
+      paths => ["/var/log/*.log", "/var/log/secure", "/var/log/messages", "/var/log/ceph/*", "/var/log/nova/*", "/var/log/neutron/*", "/var/log/openvswitch/*"]
+    }
 }
