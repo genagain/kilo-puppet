@@ -93,7 +93,6 @@ class quickstack::compute_common (
   $private_net                  = $quickstack::params::private_net,
   $ntp_local_servers            = $quickstack::params::ntp_local_servers,
   $elasticsearch_host           = $quickstack::params::elasticsearch_host,
-  $kibana_host                  = $quickstack::params::kibana_host,
   $backups_user                  = $quickstack::params::backups_user,
   $backups_script_src            = $quickstack::params::backups_script_compute,
   $backups_script_local		 = $quickstack::params::backups_script_local_name,
