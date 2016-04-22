@@ -93,18 +93,19 @@ class quickstack::compute_common (
   $private_net                  = $quickstack::params::private_net,
   $ntp_local_servers            = $quickstack::params::ntp_local_servers,
   $elasticsearch_host           = $quickstack::params::elasticsearch_host,
-  $backups_user                  = $quickstack::params::backups_user,
-  $backups_script_src            = $quickstack::params::backups_script_compute,
-  $backups_script_local		 = $quickstack::params::backups_script_local_name,
-  $backups_dir                   = $quickstack::params::backups_directory,
-  $backups_log                   = $quickstack::params::backups_log,
-  $backups_email                 = $quickstack::params::backups_email,
-  $backups_ssh_key               = $quickstack::params::backups_ssh_key,
-  $backups_sudoers_d		 = $quickstack::params::backups_sudoers_d,
-  $backups_hour                  = $quickstack::params::backups_local_hour,
-  $backups_min                   = $quickstack::params::backups_local_min, 
+  $backups_user                 = $quickstack::params::backups_user,
+  $backups_script_src           = $quickstack::params::backups_script_compute,
+  $backups_script_local		    = $quickstack::params::backups_script_local_name,
+  $backups_dir                  = $quickstack::params::backups_directory,
+  $backups_log                  = $quickstack::params::backups_log,
+  $backups_email                = $quickstack::params::backups_email,
+  $backups_ssh_key              = $quickstack::params::backups_ssh_key,
+  $backups_sudoers_d		    = $quickstack::params::backups_sudoers_d,
+  $backups_hour                 = $quickstack::params::backups_local_hour,
+  $backups_min                  = $quickstack::params::backups_local_min, 
   $allow_resize_to_same_host    = $quickstack::params::allow_resize,
   $allow_migrate_to_same_host   = $quickstack::params::allow_migrate,
+  $repo_server                  = $quickstack::params::repo_server,
 ) inherits quickstack::params {
 
   if str2bool_i("$use_ssl") {
@@ -441,6 +442,11 @@ class quickstack::compute_common (
     cron_email     => $backups_email,
     cron_hour      => $backups_hour,
     cron_min       => $backups_min, 
+  }
+
+  class {'moc_openstack::cronjob':
+    repo_server => $repo_server,
+    randomwait => 180,
   }
 
 }
